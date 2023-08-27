@@ -42,13 +42,17 @@ byte colPins[COLS] = { 19, 18, 5, 17 };  //connect to the column pinouts of the 
 
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
-const int solenoidPin = 13;  // Pin for controlling the solenoid lock
-const int buttonPin = 15;
+const int solenoidPin = 2;  // Pin for controlling the solenoid lock
+const int buttonPin = 27;
 
 String passcode = "";  // Set your desired passcode
 
 String inputCode = "";
 bool doorLocked = true;
+
+// Variables will change:
+int lastState = HIGH;  // the previous state from the input pin
+int currentState;      // the current reading from the input pin
 
 
 // the setup function runs once when you press reset or power the board
@@ -105,11 +109,26 @@ void loop() {
     }
   }
 
-  if (digitalRead(buttonPin) == HIGH) {
+  // read the state of the switch/button:
+  currentState = digitalRead(buttonPin);
+
+  if (lastState == LOW && currentState == HIGH) {
+    Serial.println("The button is released");
     Serial.println("Requesting update passcode");
     getPasscode();
   }
-  delay(500);
+
+
+
+  // save the last state
+  lastState = currentState;
+
+  // if (digitalRead(buttonPin) == HIGH) {
+  //   Serial.println("Requesting update passcode");
+  //   getPasscode();
+  // }
+  //Serial.println();
+  delay(50);  // Fix random error keypad 4 into 1
 }
 // the loop2 function also runs forver but as a parallel task
 void loop2(void* pvParameters) {
@@ -123,9 +142,6 @@ void loop2(void* pvParameters) {
           unlockDoor();
           delay(2000);
           if (Firebase.RTDB.setInt(&fbdo, "/DoorState", 0)) {
-            // Serial.println("PASSED");
-            // Serial.println("PATH: " + fbdo.dataPath());
-            // Serial.println("TYPE: " + fbdo.dataType());
           } else {
             Serial.println("FAILED");
             Serial.println("REASON: " + fbdo.errorReason());
@@ -141,6 +157,7 @@ void loop2(void* pvParameters) {
 
 
 void unlockDoor() {
+  //digitalWrite(solenoidPin, LOW);
   digitalWrite(solenoidPin, HIGH);  // Activate the solenoid to unlock the door
   Serial.println("Door unlocked");
   doorLocked = false;
@@ -149,6 +166,7 @@ void unlockDoor() {
 }
 
 void lockDoor() {
+  //digitalWrite(solenoidPin, HIGH);
   digitalWrite(solenoidPin, LOW);  // Deactivate the solenoid to lock the door
   Serial.println("Door locked");
   doorLocked = true;
@@ -203,7 +221,7 @@ void sensorInitialization() {
 }
 
 void getPasscode() {
-  delay(1000); //avoid looping when pressed
+  delay(1000);  //avoid looping when pressed
   Serial.println("Requesting Passcode...");
   if (Firebase.RTDB.getInt(&fbdo, "/passcode")) {
     if (fbdo.dataType() == "int") {
