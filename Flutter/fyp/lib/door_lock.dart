@@ -73,7 +73,10 @@ class _DoorLockState extends State<DoorLock> {
         title: const Text(
           "Door Lock Systems",
           style: TextStyle(
-              color: Colors.black87, fontSize: 30, fontWeight: FontWeight.bold),
+            color: Colors.black87,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
@@ -232,88 +235,5 @@ class _DoorLockState extends State<DoorLock> {
         ),
       ),
     );
-
-    // return MaterialApp(
-    //   home: Scaffold(
-    //     appBar: AppBar(
-    //       backgroundColor: Color.fromARGB(255, 0, 106, 95),
-    //       title: Text("Door Lock"),
-    //       centerTitle: true,
-    //     ),
-    //     body: Container(
-    //       decoration: const BoxDecoration(
-    //         gradient: LinearGradient(
-    //           colors: [Colors.teal, Colors.tealAccent],
-    //           begin: Alignment.topLeft,
-    //           end: Alignment.bottomRight,
-    //         ),
-    //       ),
-    //       child: Center(
-    //         child: Column(
-    //           //column utk setiap container mcm status, button unlock
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             Container(
-    //               // Status door
-    //               decoration: BoxDecoration(
-    //                 color: const Color.fromARGB(255, 0, 106, 95),
-    //                 borderRadius: BorderRadius.circular(40),
-    //               ),
-    //               child: SizedBox(
-    //                 width: 300,
-    //                 child: Column(
-    //                   children: [
-    //                     const SizedBox(height: 20),
-    //                     const Text(
-    //                       "Door Lock Status",
-    //                       style: TextStyle(fontSize: 24, color: Colors.white),
-    //                     ),
-    //                     const SizedBox(height: 10),
-    //                     Image.asset(image, height: 100),
-    //                     const SizedBox(height: 20),
-    //                     Text(
-    //                       doorStatus,
-    //                       style:
-    //                           TextStyle(fontSize: 40, color: Colors.redAccent),
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //             const SizedBox(
-    //               height: 30,
-    //             ),
-    //             Container(
-    //               //Door Control
-    //               decoration: BoxDecoration(
-    //                 color: const Color.fromARGB(255, 0, 106, 95),
-    //                 borderRadius: BorderRadius.circular(40),
-    //               ),
-    //               width: 300,
-    //               child: Container(
-    //                 padding: EdgeInsets.all(20),
-    //                 //width: 300,
-    //                 child: ElevatedButton(
-    //                   onPressed: doorActivation,
-    //                   style: ElevatedButton.styleFrom(
-    //                     backgroundColor: Colors.teal,
-    //                     foregroundColor: Colors.white,
-    //                     shape: RoundedRectangleBorder(
-    //                       borderRadius: BorderRadius.circular(30),
-    //                     ),
-    //                   ),
-    //                   child: const Text(
-    //                     'Unlock/Lock',
-    //                     style: TextStyle(fontSize: 20, color: Colors.white),
-    //                   ),
-    //                 ),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

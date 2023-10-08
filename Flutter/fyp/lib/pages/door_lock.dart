@@ -135,6 +135,40 @@ class _DoorLockState extends State<DoorLock> {
               ),
 
               const SizedBox(height: 20),
+              // Door Passcode
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 106, 95),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: SizedBox(
+                  width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Passcode Manager',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PasscodeUpdate(),
+                                ),
+                              );
+                            },
+                            child: const Text('Update Passcode')),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
               // Door Ip Address
               Container(
                 decoration: BoxDecoration(
@@ -165,159 +199,10 @@ class _DoorLockState extends State<DoorLock> {
                   ),
                 ),
               ),
-
-              const SizedBox(height: 20),
-              // Door Passcode
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 0, 106, 95),
-                  borderRadius: BorderRadius.circular(40),
-                ),
-                child: SizedBox(
-                  width: 250,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 10),
-                        const Text(
-                          'Passcode Manager',
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PasscodeUpdate()),
-                              );
-                            },
-                            child: const Text('Update Passcode')),
-                        const SizedBox(height: 10),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              // const Text('Door Status',
-              //     style: TextStyle(fontSize: 24, color: Colors.white)),
-              // SizedBox(
-              //   height: 6,
-              //   width: MediaQuery.of(context).size.width,
-              // ),
-              // Image.asset(image, height: 100),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     // Navigator.push(
-              //     //   context,
-              //     //   MaterialPageRoute(
-              //     //     builder: (context) => ReadExamples(),
-              //     //   ),
-              //     // );
-              //     setState(() async {
-              //       if (realTimeValue == 0) {
-              //         realTimeValue = 1;
-              //         image = imageUnlock;
-              //       } else {
-              //         realTimeValue = 0;
-              //         image = imageLock;
-              //       }
-              //       await database.update({'Door/DoorState/': realTimeValue});
-              //     });
-              //   },
-              //   child: const Text('Unlock/Lock'),
-              // ),
-              // Text("Realtime data: $realTimeValue"),
-              // Text('Door Status: $lockStatus')
             ],
           ),
         ),
       ),
     );
-
-    // return MaterialApp(
-    //   home: Scaffold(
-    //     appBar: AppBar(
-    //       backgroundColor: Color.fromARGB(255, 0, 106, 95),
-    //       title: Text("Door Lock"),
-    //       centerTitle: true,
-    //     ),
-    //     body: Container(
-    //       decoration: const BoxDecoration(
-    //         gradient: LinearGradient(
-    //           colors: [Colors.teal, Colors.tealAccent],
-    //           begin: Alignment.topLeft,
-    //           end: Alignment.bottomRight,
-    //         ),
-    //       ),
-    //       child: Center(
-    //         child: Column(
-    //           //column utk setiap container mcm status, button unlock
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             Container(
-    //               // Status door
-    //               decoration: BoxDecoration(
-    //                 color: const Color.fromARGB(255, 0, 106, 95),
-    //                 borderRadius: BorderRadius.circular(40),
-    //               ),
-    //               child: SizedBox(
-    //                 width: 300,
-    //                 child: Column(
-    //                   children: [
-    //                     const SizedBox(height: 20),
-    //                     const Text(
-    //                       "Door Lock Status",
-    //                       style: TextStyle(fontSize: 24, color: Colors.white),
-    //                     ),
-    //                     const SizedBox(height: 10),
-    //                     Image.asset(image, height: 100),
-    //                     const SizedBox(height: 20),
-    //                     Text(
-    //                       doorStatus,
-    //                       style:
-    //                           TextStyle(fontSize: 40, color: Colors.redAccent),
-    //                     ),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ),
-    //             const SizedBox(
-    //               height: 30,
-    //             ),
-    //             Container(
-    //               //Door Control
-    //               decoration: BoxDecoration(
-    //                 color: const Color.fromARGB(255, 0, 106, 95),
-    //                 borderRadius: BorderRadius.circular(40),
-    //               ),
-    //               width: 300,
-    //               child: Container(
-    //                 padding: EdgeInsets.all(20),
-    //                 //width: 300,
-    //                 child: ElevatedButton(
-    //                   onPressed: doorActivation,
-    //                   style: ElevatedButton.styleFrom(
-    //                     backgroundColor: Colors.teal,
-    //                     foregroundColor: Colors.white,
-    //                     shape: RoundedRectangleBorder(
-    //                       borderRadius: BorderRadius.circular(30),
-    //                     ),
-    //                   ),
-    //                   child: const Text(
-    //                     'Unlock/Lock',
-    //                     style: TextStyle(fontSize: 20, color: Colors.white),
-    //                   ),
-    //                 ),
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

@@ -13,7 +13,7 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
   String passcode = '';
   String currentPasscode = '';
   final _textController = TextEditingController();
-  String updatedPasscord = '';
+  late int updatedPasscord;
 
   @override
   Widget build(BuildContext context) {
@@ -43,89 +43,102 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 0, 106, 95),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: SizedBox(
-                width: 250,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text(
-                            'Current Passcode: ',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          Text(
-                            currentPasscode,
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.red),
-                          ),
-                        ],
-                      ),
-                      const Text('Enter the new Passcode:',
-                          style: TextStyle(fontSize: 20, color: Colors.white)),
-                      TextField(
-                        controller: _textController,
-                        decoration: InputDecoration(
-                          hintText: '4 to 6 Characters',
-                          border: const OutlineInputBorder(),
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              _textController.clear();
-                            },
-                            icon: const Icon(Icons.clear),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 106, 95),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: SizedBox(
+                  width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'Current Passcode: ',
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
+                            ),
+                            Text(
+                              currentPasscode,
+                              style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          ],
+                        ),
+                        const Text('Enter the new Passcode:',
+                            style:
+                                TextStyle(fontSize: 20, color: Colors.white)),
+                        TextField(
+                          controller: _textController,
+                          decoration: InputDecoration(
+                            hintText: '4 to 6 Characters',
+                            hintStyle: const TextStyle(color: Colors.white),
+                            enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                _textController.clear();
+                              },
+                              icon: const Icon(
+                                Icons.clear,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() async {
-                            updatedPasscord = _textController.text;
-                            await database
-                                .update({'Door/Passcode/': updatedPasscord});
-                          });
-                        },
-                        child: Text('Update'),
-                      ),
-                    ],
+                        SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() async {
+                              //updatedPasscord = _textController.text;
+                              updatedPasscord = int.parse(_textController.text);
+                              await database
+                                  .update({'Door/Passcode/': updatedPasscord});
+                            });
+                          },
+                          child: Text('Update'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 0, 106, 95),
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: const SizedBox(
-                width: 350,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 10),
-                      Text(
-                        'After update the Passcode,\nPlease press the UPDATE button on Door Lock System.',
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      SizedBox(height: 10),
-                    ],
+              const SizedBox(height: 20),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 106, 95),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: const SizedBox(
+                  width: 350,
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          'After update the Passcode,\nPlease press the UPDATE button on Door Lock System.',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

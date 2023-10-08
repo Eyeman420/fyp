@@ -18,16 +18,27 @@ class _DoorMonitorState extends State<DoorMonitor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Monitor"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text(
+          'Door Monitoring',
+          style: TextStyle(
+              color: Colors.black87, fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new VlcPlayer(
               controller: _vlcViewController,
-              aspectRatio: 16 / 9,
+              aspectRatio: 4 / 3,
               placeholder: Text("Hello World"),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Take picture'),
             ),
           ],
         ),
