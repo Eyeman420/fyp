@@ -26,6 +26,7 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
           setState(
             () {
               currentPasscode = passcode;
+              print(currentPasscode);
             },
           );
         }
