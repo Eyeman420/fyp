@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:fyp/pages/camera_face_capture.dart';
+import 'package:fyp/pages/manage_user.dart';
 import 'package:fyp/pages/passcode_update.dart';
 
 class DoorLock extends StatefulWidget {
@@ -76,6 +78,15 @@ class _DoorLockState extends State<DoorLock> {
           style: TextStyle(
               color: Colors.black87, fontSize: 30, fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+            },
+            icon: Icon(Icons.exit_to_app,
+                color: Theme.of(context).colorScheme.primary),
+          ),
+        ],
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -112,21 +123,26 @@ class _DoorLockState extends State<DoorLock> {
                             color: Colors.red,
                             fontWeight: FontWeight.bold),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() async {
-                            if (realTimeValue == 0) {
-                              realTimeValue = 1;
-                              image = imageUnlock;
-                            } else {
-                              realTimeValue = 0;
-                              image = imageLock;
-                            }
-                            await database
-                                .update({'Door/DoorState/': realTimeValue});
-                          });
-                        },
-                        child: const Text('Unlock/Lock'),
+                      SizedBox(
+                        width: 200,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            setState(() async {
+                              if (realTimeValue == 0) {
+                                realTimeValue = 1;
+                                image = imageUnlock;
+                              } else {
+                                realTimeValue = 0;
+                                image = imageLock;
+                              }
+                              await database
+                                  .update({'Door/DoorState/': realTimeValue});
+                            });
+                          },
+                          child: const Text(
+                            'Unlock/Lock',
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                     ],
@@ -152,7 +168,9 @@ class _DoorLockState extends State<DoorLock> {
                           'Passcode Manager',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
-                        ElevatedButton(
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -161,13 +179,79 @@ class _DoorLockState extends State<DoorLock> {
                                 ),
                               );
                             },
-                            child: const Text('Update Passcode')),
+                            child: const Text('Update Passcode'),
+                          ),
+                        ),
                         const SizedBox(height: 10),
                       ],
                     ),
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
+              // Face recognition
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 106, 95),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: SizedBox(
+                  width: 250,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        const Text(
+                          'Face Recognition Manager',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        // Add new user
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const CameraFaceCapture(),
+                                ),
+                              );
+                            },
+                            child: const Text('Add new user'),
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        // Manager current user
+                        SizedBox(
+                          width: 200,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ManageUser(),
+                                ),
+                              );
+                            },
+                            child: const Text('Manage current user'),
+                          ),
+                        ),
+                        // Text(
+                        //   currentIPA,
+                        //   style: const TextStyle(
+                        //       fontSize: 25,
+                        //       color: Colors.white,
+                        //       fontWeight: FontWeight.bold),
+                        // ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 20),
               // Door Ip Address
               Container(

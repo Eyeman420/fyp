@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/pages/stream_data_list.dart';
-import 'package:fyp/pages/passcode_update.dart';
+import 'package:fyp/pages/log_motion_sensor.dart';
+//import 'package:fyp/pages/stream_data_list.dart';
+//import 'package:fyp/pages/passcode_update.dart';
 
 class MotionSensor extends StatefulWidget {
   const MotionSensor({super.key});
@@ -20,26 +21,26 @@ class _MotionSensorState extends State<MotionSensor> {
   bool isSelected = false;
   int motionActive = 0;
   int? currentMA;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  //final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   List<String> dataList = [];
 
   @override
   void initState() {
     super.initState();
-    getDataFromFirestore();
+    //getDataFromFirestore();
   }
 
-  void getDataFromFirestore() async {
-    QuerySnapshot querySnapshot =
-        await _firestore.collection('your_collection_name').get();
+  // void getDataFromFirestore() async {
+  //   QuerySnapshot querySnapshot =
+  //       await _firestore.collection('your_collection_name').get();
 
-    setState(() {
-      dataList = querySnapshot.docs
-          .map((doc) =>
-              (doc.data() as Map<String, dynamic>)['Message'].toString())
-          .toList(); // Replace 'your_collection_name' with the actual collection name.
-    });
-  }
+  //   setState(() {
+  //     dataList = querySnapshot.docs
+  //         .map((doc) =>
+  //             (doc.data() as Map<String, dynamic>)['Message'].toString())
+  //         .toList(); // Replace 'your_collection_name' with the actual collection name.
+  //   });
+  // }
 
   final DatabaseReference database = FirebaseDatabase.instance.ref();
   @override
@@ -205,33 +206,43 @@ class _MotionSensorState extends State<MotionSensor> {
 
               // log
               Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 0, 106, 95),
-                    borderRadius: BorderRadius.circular(40),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 0, 106, 95),
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: SizedBox(
+                  width: 350,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Log Motion Sensing:',
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: 300,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LogMotionSensor(),
+                              ),
+                            );
+                          },
+                          child: const Text('Click here'),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
-                  child: SizedBox(
-                    width: 350,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 10),
-                        const Text(
-                          'Log Motion Sensing:',
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StreamDataList()));
-                            },
-                            child: Text('Click here'))
-                      ],
-                    ),
-                  ))
+                ),
+              )
             ],
           ),
         ),

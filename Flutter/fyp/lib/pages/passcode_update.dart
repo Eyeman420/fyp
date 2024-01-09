@@ -43,10 +43,12 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
-            children: [
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
               const SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
@@ -54,7 +56,7 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: SizedBox(
-                  width: 250,
+                  width: 350,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
@@ -81,6 +83,7 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
                             style:
                                 TextStyle(fontSize: 20, color: Colors.white)),
                         TextField(
+                          keyboardType: TextInputType.number,
                           controller: _textController,
                           decoration: InputDecoration(
                             hintText: '4 to 6 Characters',
@@ -98,17 +101,21 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            setState(() async {
-                              //updatedPasscord = _textController.text;
-                              updatedPasscord = int.parse(_textController.text);
-                              await database
-                                  .update({'Door/Passcode/': updatedPasscord});
-                            });
-                          },
-                          child: Text('Update'),
+                        SizedBox(height: 20),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              setState(() async {
+                                //updatedPasscord = _textController.text;
+                                updatedPasscord =
+                                    int.parse(_textController.text);
+                                await database.update(
+                                    {'Door/Passcode/': updatedPasscord});
+                              });
+                            },
+                            child: Text('Update'),
+                          ),
                         ),
                       ],
                     ),
@@ -129,7 +136,7 @@ class _PasscodeUpdateState extends State<PasscodeUpdate> {
                       children: [
                         SizedBox(height: 10),
                         Text(
-                          'After update the Passcode,\nPlease press the UPDATE button on Door Lock System.',
+                          'Wait for 4 seconds to update the passcode into system',
                           style: TextStyle(fontSize: 20, color: Colors.white),
                         ),
                         SizedBox(height: 10),
