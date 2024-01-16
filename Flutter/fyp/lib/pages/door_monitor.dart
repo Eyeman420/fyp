@@ -211,7 +211,7 @@ class _DoorMonitorState extends State<DoorMonitor> {
                   child: Row(
                     children: [
                       Text(
-                        "Flash Status: ",
+                        "  Flash Status: ",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                       Text(

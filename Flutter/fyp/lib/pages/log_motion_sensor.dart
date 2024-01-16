@@ -227,6 +227,7 @@ class _LogMotionSensorState extends State<LogMotionSensor> {
         centerTitle: true,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Center(
           child: Column(
             children: [
