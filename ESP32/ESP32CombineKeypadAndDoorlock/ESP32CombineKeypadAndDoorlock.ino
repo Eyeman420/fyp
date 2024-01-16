@@ -1,17 +1,17 @@
-//#include <LiquidCrystal.h>
-
 #include <Keypad.h>
 #include <Firebase_ESP_Client.h>
 #include <addons/TokenHelper.h>
 #include <addons/RTDBHelper.h>
 #include <LiquidCrystal_I2C.h>
-
-//#define WIFI_SSID "Hotspot@PUTRA-2.4G"
-//#define WIFI_PASSWORD ""
+//
+#define WIFI_SSID "Hotspot@PUTRA-2.4G"
+#define WIFI_PASSWORD ""
 // #define WIFI_SSID "XZ1"
-// #define WIFI_PASSWORD "test1234"
-#define WIFI_SSID "arfa33_2.4G"
-#define WIFI_PASSWORD "blackjack66"
+//#define WIFI_PASSWORD "test1234"
+//#define WIFI_SSID "Eyeman420"
+//#define WIFI_PASSWORD "test1234"
+//#define WIFI_SSID "arfa33_2.4G"
+//#define WIFI_PASSWORD "blackjack66"
 
 #define WIFI_TIMEOUT_MS 20000
 #define API_KEY "AIzaSyDlVO_Ne9zTNjZljeu0_cFscLWzzJ1ppJo"
@@ -53,6 +53,7 @@ const int buttonPin = 33;
 String passcode = "";
 String inputCode = "";
 String inputAsterisk = "";
+//bool buttonPressed = false;
 
 String uid;
 String wifiIP;
@@ -61,7 +62,7 @@ unsigned long lastTimeKeypadDelayed = millis();
 //unsigned long lastTimeDoorDelayed;
 //unsigned long lastTimeFBDelayed;
 //unsigned long lastTimeUpdateDelayed;
-unsigned long keypadDelay = 100;
+unsigned long keypadDelay = 50;
 unsigned long doorDelay = 5000;
 //unsigned long FBDelay = 3000;
 //unsigned long UpdateDelay = 30000;
@@ -72,7 +73,7 @@ unsigned long sendDataPrevMillis = 0;
 //int count = 0;
 
 // Variables will change:
-int lastState = HIGH;  // the previous state from the input pin
+int lastState = LOW;  // the previous state from the input pin
 int currentState;      // the current reading from the input pin
 
 
@@ -84,10 +85,13 @@ void setup() {
   lcd.begin();
   lcd.clear();
   lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Starting Up...");
   sensorInitialization();
   connectToWiFi();
   configFB();
   //getPasscode();
+  lcd.clear();
   lcd.setCursor(0, 0);
   // print message
   lcd.print("Passcode: ");
@@ -101,10 +105,23 @@ void loop() {
     lastTimeKeypadDelayed = timeNow;
     char key = keypad.getKey();
     lcd.setCursor(10, 0);
-    Serial.print("Free Memory: ");
-    Serial.println(ESP.getFreeHeap());
+    //    Serial.print("Free Memory: ");
+    //    Serial.println(ESP.getFreeHeap());
 
-    //lcd.print(inputAsterisk);
+    //Read button to unlock
+    currentState = digitalRead(buttonPin);
+    if (lastState == LOW && currentState == HIGH) {
+      Serial.println("Unlock button was pressed!");
+      doorUnlock(timeNow);
+      //      lcd.clear();
+      //      lcd.setCursor(0, 1);
+      //      lcd.print("Door Opened!");
+      //      doorOpenTime = timeNow;
+      //      Serial.println("Button pressed!, door opened");
+      //      digitalWrite(solenoidPin, HIGH);
+      //buttonPressed = false; //Update it to default value
+    }
+
 
     if (key) {
       if (key == '*') {
@@ -123,13 +140,17 @@ void loop() {
 
       }  else {
         Serial.println();
+        //When password is correct or button was pressed
         if (inputCode == passcode) {
-          lcd.clear();
-          lcd.setCursor(0, 1);
-          lcd.print("Door Opened!");
-          doorOpenTime = timeNow;
-          Serial.println("Valid passcode, door opened");
-          digitalWrite(solenoidPin, HIGH);
+          Serial.println("Valid passcode");
+          doorUnlock(timeNow);
+          //          lcd.clear();
+          //          lcd.setCursor(0, 1);
+          //          lcd.print("Door Opened!");
+          //          doorOpenTime = timeNow;
+          //          Serial.println("Valid passcode, door opened");
+          //          digitalWrite(solenoidPin, HIGH);
+          //          buttonPressed = false; //Update it to default value
         } else {
           lcd.clear();
           lcd.setCursor(0, 1);
@@ -165,42 +186,55 @@ void loop() {
   }
 
   //Request FB
-  if (Firebase.ready() && (millis() - sendDataPrevMillis > 5000 || sendDataPrevMillis == 0)) {
+  if (Firebase.ready() && (millis() - sendDataPrevMillis > 4000 || sendDataPrevMillis == 0)) {
     sendDataPrevMillis = millis();
     int doorlockValue = 0;
-    Serial.println("Requesting update passcode");
     getPasscode();
 
     // Read the doorlock value from Firebase
     if (Firebase.RTDB.getInt(&fbdo, "Door/DoorState")) {
       doorlockValue = fbdo.intData();
       if (doorlockValue == 1) {
-        //lcd.print("Door Opened!");
+        lcd.clear();
+        lcd.setCursor(0, 1);
+        lcd.print("Door Opened!");
         doorOpenTime = sendDataPrevMillis;
-        Serial.println("Door opened");
+        Serial.println("Door opened  FB");
         digitalWrite(solenoidPin, HIGH);
       }
 
     } else {
-      Serial.println("FAILED");
-      Serial.println("Error get DoorState in UnlockDoor: " + fbdo.errorReason());
+      Serial.println("Error GET DoorState in UnlockDoor: " + fbdo.errorReason());
+      //      Serial.println("Restart ESP32...");
+      //      ESP.restart();
     }
 
     //After turn on Solenoid, quickly update 0 to FB to avoid conflict loop
     if (digitalRead(solenoidPin) == HIGH) {
 
+//      lcd.clear();
+//      lcd.setCursor(0, 0);
+//      // print message
+//      lcd.print("Passcode: ");
+
       if (Firebase.RTDB.setInt(&fbdo, "Door/DoorState", 0)) {
       } else {
         Serial.println("FAILED");
-        Serial.println("Error set DoorState in LockDoor: " + fbdo.errorReason());
+        Serial.println("Error SET DoorState in LockDoor: " + fbdo.errorReason());
+        Serial.println("Restart ESP32...");
+        ESP.restart();
       }
     }
 
+    // If the token is expired, refresh it
     if (Firebase.isTokenExpired()) {
       Firebase.refreshToken(&config);
       Serial.println("Refresh token");
     }
+
   }
+  // save the the last state for button
+  lastState = currentState;
 }
 
 // Connect to WiFi
@@ -208,9 +242,6 @@ void connectToWiFi() {
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-
-
-
   Serial.println("Wifi connecting: ");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -278,6 +309,15 @@ void configFB() {
   uid = auth.token.uid.c_str();
   Serial.print("User UID: ");
   Serial.println(uid);
+
+  // Push IP Address
+  //  if (Firebase.RTDB.setString(&fbdo, "/Door/IPAddressDoor", wifiIP)) {
+  //    Serial.println("IP Address send to FB!");
+  //  }
+  //  else {
+  //    Serial.print("Error IPAddressMotion: ");
+  //    Serial.println(fbdo.errorReason());
+  //  }
 }
 
 void sensorInitialization() {
@@ -298,6 +338,17 @@ void getPasscode() {
     }
   } else {
     Serial.println("Error get Passcode: " + fbdo.errorReason());
-    //Serial.println("Restart fb...");
+    Serial.println("Restart ESP32...");
+    ESP.restart();
   }
+}
+
+void doorUnlock(unsigned long tN) {
+  unsigned long timeNow = tN;
+  lcd.clear();
+  lcd.setCursor(0, 1);
+  lcd.print("Door Opened!");
+  doorOpenTime = timeNow;
+  Serial.println("Door opened");
+  digitalWrite(solenoidPin, HIGH);
 }
