@@ -217,7 +217,7 @@ class _LogMotionSensorState extends State<LogMotionSensor> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(
-          'Logs Motion Sensor',
+          'Logs Burglary Detection',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 25,

@@ -27,20 +27,7 @@ class _MotionSensorState extends State<MotionSensor> {
   @override
   void initState() {
     super.initState();
-    //getDataFromFirestore();
   }
-
-  // void getDataFromFirestore() async {
-  //   QuerySnapshot querySnapshot =
-  //       await _firestore.collection('your_collection_name').get();
-
-  //   setState(() {
-  //     dataList = querySnapshot.docs
-  //         .map((doc) =>
-  //             (doc.data() as Map<String, dynamic>)['Message'].toString())
-  //         .toList(); // Replace 'your_collection_name' with the actual collection name.
-  //   });
-  // }
 
   final DatabaseReference database = FirebaseDatabase.instance.ref();
   @override
@@ -48,21 +35,6 @@ class _MotionSensorState extends State<MotionSensor> {
     @override
     void initState() {
       super.initState();
-
-      //get MotionState,
-      // database.child('MotionSensor/MotionState/').onValue.listen(
-      //   (event) {
-      //     String temp = event.snapshot.value.toString();
-      //     realTimeMotion = int.parse(temp);
-      //     if (realTimeMotion != currentMotion) {
-      //       setState(
-      //         () {
-      //           currentMotion = realTimeMotion;
-      //         },
-      //       );
-      //     }
-      //   },
-      // );
     }
 
     //getIPAddress
@@ -72,14 +44,6 @@ class _MotionSensorState extends State<MotionSensor> {
         setState(() {
           wifiIPAddress = temp.toString();
         });
-
-        // if (currentIPA != wifiIPAddress) {
-        //   setState(
-        //     () {
-        //       currentIPA = wifiIPAddress;
-        //     },
-        //   );
-        // }
       },
     );
 
@@ -90,14 +54,6 @@ class _MotionSensorState extends State<MotionSensor> {
         setState(() {
           locationMotion = temp.toString();
         });
-
-        // if (currentLM != locationMotion) {
-        //   setState(
-        //     () {
-        //       currentLM = locationMotion;
-        //     },
-        //   );
-        // }
       },
     );
 
@@ -114,20 +70,6 @@ class _MotionSensorState extends State<MotionSensor> {
             isSelected = true;
           }
         });
-
-        // if (currentMA != motionActive) {
-        //   setState(
-        //     () {
-        //       if (motionActive == 0) {
-        //         isSelected = false;
-        //       } else {
-        //         isSelected = true;
-        //       }
-
-        //       currentMA = motionActive;
-        //     },
-        //   );
-        // }
       },
     );
 
@@ -135,7 +77,7 @@ class _MotionSensorState extends State<MotionSensor> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(
-          "Motion Sensing System",
+          "Burglary Detection System",
           style: TextStyle(
               color: Colors.black87, fontSize: 30, fontWeight: FontWeight.bold),
         ),
@@ -202,7 +144,6 @@ class _MotionSensorState extends State<MotionSensor> {
               ),
 
               const SizedBox(height: 20),
-              //const SizedBox(height: 10),
 
               // log
               Container(
@@ -216,7 +157,7 @@ class _MotionSensorState extends State<MotionSensor> {
                     children: [
                       const SizedBox(height: 10),
                       const Text(
-                        'Log Motion Sensing:',
+                        'Log Burglary Detection:',
                         style: TextStyle(fontSize: 24, color: Colors.white),
                       ),
                       const SizedBox(
