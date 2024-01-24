@@ -11,32 +11,17 @@
 #include "addons/RTDBHelper.h"
 
 // Insert your network credentials
-//#define WIFI_SSID "arfa33_2.4G"
-//#define WIFI_PASSWORD "blackjack66"
-
-//#define WIFI_SSID "XZ1"
-//#define WIFI_PASSWORD "test1234"
-
-#define WIFI_SSID "Eyeman420"
-#define WIFI_PASSWORD "test1234"
-
-//#define WIFI_SSID "Hotspot@PUTRA-2.4G"
-//#define WIFI_PASSWORD ""
-
-//#define WIFI_SSID "LAPTOP-PNIEDQNG 2826"
-//#define WIFI_PASSWORD "8J4^24m3"
+#define WIFI_SSID ""
+#define WIFI_PASSWORD ""
 
 // Insert Firebase project API Key
-#define API_KEY "AIzaSyDlVO_Ne9zTNjZljeu0_cFscLWzzJ1ppJo"
-//#define API_KEY "AIzaSyBvcyHfUINuFXYdeXl8WHz4499yqZZPRPo"
+#define API_KEY ""
 
 // Insert RTDB URL
-#define DATABASE_URL "https://fyp-esp32-19f8b-default-rtdb.asia-southeast1.firebasedatabase.app/"
-//#define DATABASE_URL "https://putra-scada-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define DATABASE_URL ""
 
 // Messenger Firebase
-const char* serverKey = "AAAAzF5r-7M:APA91bFcGa5IMhtAH2D0nUq2PW-KjDk1zoDJ8S1i563FWqYsLcucx5UzFkS8Mz0VP97j4aCQdegJN0MvaeV8wKonLEWU_3yNTmqgOhJVkWcbxP6EnfLxgEU_AzRgIMxsbQoIOrrYZdxG";
-//const char* serverKey = "AAAA1MTGS4M:APA91bELhwLBWmOeE4Td484ZVV7WjT4SVzEYLbh_UteI3ecuw02Oe5yx-CpRy-8kAfxZFme7s2lcEgYwpoJY-KMuDgMyOsB77814ZyXtrnxbusBnuMyndN9fksvp3FGgokHsci1H0uf4";
+const char* serverKey = ";
 
 #define USER_EMAIL "motionsensor@gmail.com"
 #define USER_PASSWORD "motionsensor1234"
@@ -61,7 +46,6 @@ const char* ntpServer2 = "time.nist.gov";
 const long  gmtOffset_sec = 8 * 3600;
 const int   daylightOffset_sec = 0 * 3600;
 
-//const char* time_zone = "CET-1CEST,M3.5.0,M10.5.0/3";  // TimeZone rule for Europe/Rome including daylight adjustment rules (optional)
 const char* time_zone = "Asia/Kuala_Lumpur";  // Time zone for Malaysia
 
 String Time;

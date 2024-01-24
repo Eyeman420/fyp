@@ -1,2 +1,2 @@
-#define SSID1 "arfa33_2.4G"
-#define PWD1 "blackjack66"
+#define SSID1 ""
+#define PWD1 ""

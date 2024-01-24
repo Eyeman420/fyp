@@ -4,18 +4,13 @@
 #include <addons/RTDBHelper.h>
 #include <LiquidCrystal_I2C.h>
 //
-#define WIFI_SSID "Hotspot@PUTRA-2.4G"
+#define WIFI_SSID ""
 #define WIFI_PASSWORD ""
-// #define WIFI_SSID "XZ1"
-//#define WIFI_PASSWORD "test1234"
-//#define WIFI_SSID "Eyeman420"
-//#define WIFI_PASSWORD "test1234"
-//#define WIFI_SSID "arfa33_2.4G"
-//#define WIFI_PASSWORD "blackjack66"
+
 
 #define WIFI_TIMEOUT_MS 20000
-#define API_KEY "AIzaSyDlVO_Ne9zTNjZljeu0_cFscLWzzJ1ppJo"
-#define DATABASE_URL "https://fyp-esp32-19f8b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define API_KEY ""
+#define DATABASE_URL ""
 #define USER_EMAIL "keypad@gmail.com"
 #define USER_PASSWORD "keypad1234"
 

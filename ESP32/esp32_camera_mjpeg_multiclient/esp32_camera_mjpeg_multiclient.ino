@@ -1,24 +1,4 @@
-/*
 
-  This is a simple MJPEG streaming webserver implemented for AI-Thinker ESP32-CAM
-  and ESP-EYE modules.
-  This is tested to work with VLC and Blynk video widget and can support up to 10
-  simultaneously connected streaming clients.
-  Simultaneous streaming is implemented with FreeRTOS tasks.
-
-  Inspired by and based on this Instructable: $9 RTSP Video Streamer Using the ESP32-CAM Board
-  (https://www.instructables.com/id/9-RTSP-Video-Streamer-Using-the-ESP32-CAM-Board/)
-
-  Board: AI-Thinker ESP32-CAM or ESP-EYE
-  Compile as:
-   ESP32 Dev Module
-   CPU Freq: 240
-   Flash Freq: 80
-   Flash mode: QIO
-   Flash Size: 4Mb
-   Patrition: Minimal SPIFFS
-   PSRAM: Enabled
-*/
 
 // ESP32 has two cores: APPlication core and PROcess core (the one that runs ESP32 SDK stack)
 #define APP_CPU 1
@@ -63,10 +43,10 @@
 #include "home_wifi_multi.h"
 
 // Insert Firebase project API Key
-#define API_KEY "AIzaSyDlVO_Ne9zTNjZljeu0_cFscLWzzJ1ppJo"
+#define API_KEY ""
 
 // Insert RTDB URL
-#define DATABASE_URL "https://fyp-esp32-19f8b-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define DATABASE_URL ""
 
 // Define Firebase Data object
 FirebaseData fbdo;
